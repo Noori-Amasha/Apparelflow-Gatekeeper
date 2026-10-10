@@ -6,7 +6,7 @@ Production Batch Verification &amp; Sewing Queue Gate for ApparelFlow ERP
 
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white) ![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white) ![React](https://img.shields.io/badge/React-149ECA?style=flat-square&logo=react&logoColor=white) ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
 
-> A full-stack, role-based garment production verification system developed for the **Webtezza (Pvt) Ltd — Software Engineering Practical Challenge**.
+> A full-stack, role-based garment production verification system developed for the **Webtezza (Pvt) Ltd**
 
 ---
 
