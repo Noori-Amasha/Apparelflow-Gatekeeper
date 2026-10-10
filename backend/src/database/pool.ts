@@ -1,11 +1,14 @@
-import { Pool } from "pg";
+import { Pool, types } from "pg";
 import { env } from "../config/env";
+
+// PostgreSQL NUMERIC -> JavaScript number
+types.setTypeParser(1700, Number);
 
 export const pool = new Pool({
   connectionString: env.DATABASE_URL,
+  max: 10,
 });
 
 pool.on("error", (error) => {
-  console.error("Unexpected PostgreSQL pool error:", error);
-  process.exit(1);
+  console.error("PostgreSQL connection error:", error);
 });
