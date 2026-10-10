@@ -2,27 +2,27 @@ import { app } from "./app";
 import { env } from "./config/env";
 import { pool } from "./database/pool";
 
-const server = app.listen(env.PORT, () => {
-  console.log(`ApparelFlow API running on http://localhost:${env.PORT}`);
-});
+async function startServer() {
+  await pool.query("SELECT 1");
 
-const shutdown = async (signal: string): Promise<void> => {
-  console.log(`${signal} received. Shutting down...`);
+  console.log("PostgreSQL connected");
 
-  server.close(async () => {
-    await pool.end();
-
-    console.log("PostgreSQL pool closed.");
-    console.log("HTTP server closed.");
-
-    process.exit(0);
+  const server = app.listen(env.PORT, () => {
+    console.log(`Backend running at http://localhost:${env.PORT}`);
   });
-};
 
-process.on("SIGINT", () => {
-  void shutdown("SIGINT");
-});
+  async function shutdown() {
+    server.close(async () => {
+      await pool.end();
+      process.exit(0);
+    });
+  }
 
-process.on("SIGTERM", () => {
-  void shutdown("SIGTERM");
+  process.on("SIGINT", shutdown);
+  process.on("SIGTERM", shutdown);
+}
+
+startServer().catch((error) => {
+  console.error("Failed to start backend:", error);
+  process.exit(1);
 });

@@ -3,29 +3,27 @@ import { z } from "zod";
 
 dotenv.config();
 
-const envSchema = z.object({
+const schema = z.object({
   NODE_ENV: z
-    .enum(["development", "test", "production"])
+    .enum(["development", "production", "test"])
     .default("development"),
 
   PORT: z.coerce.number().int().positive().default(5000),
 
-  DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
+  DATABASE_URL: z.string().url(),
 
-  JWT_SECRET: z
-    .string()
-    .min(32, "JWT_SECRET must contain at least 32 characters"),
+  JWT_SECRET: z.string().min(32),
 
-  JWT_EXPIRES_IN: z.string().default("1h"),
+  JWT_EXPIRES_IN: z.string().default("8h"),
 
-  CLIENT_URL: z.string().url().default("http://localhost:5173"),
+  CORS_ORIGIN: z.string().url().default("http://localhost:5173"),
 });
 
-const result = envSchema.safeParse(process.env);
+const result = schema.safeParse(process.env);
 
 if (!result.success) {
   console.error(
-    "Invalid environment configuration:",
+    "Invalid environment variables:",
     result.error.flatten().fieldErrors,
   );
 
