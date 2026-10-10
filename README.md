@@ -153,12 +153,4 @@ The automated test suite will verify:
 
 ---
 
-## 📄 Assessment
-
-Developed as part of the **Software Engineering Intern (Full-Stack / React / Next.js) Practical Challenge** by **Webtezza (Pvt) Ltd**.
-
-**Focus:** Secure cutting batch verification, manufacturing workflow control, and role-based operations.
-
----
-
 ⭐ **ApparelFlow Gatekeeper — Verify Before You Sew.**
