@@ -8,7 +8,7 @@ export class VerificationLogRepository {
       `SELECT *
        FROM verification_logs
        WHERE order_id = $1
-       ORDER BY created_at DESC`,
+       ORDER BY timestamp DESC`,
       [orderId],
     );
   }
@@ -20,6 +20,7 @@ export class VerificationLogRepository {
       decision: VerificationDecision;
       rejection_note: string | null;
       wastage_pct: number;
+      component_snapshot: unknown;
     },
     client: DatabaseClient,
   ): Promise<VerificationLog> {
@@ -29,9 +30,17 @@ export class VerificationLogRepository {
         verifier_id,
         decision,
         rejection_note,
-        wastage_pct
+        wastage_pct,
+        component_snapshot
       )
-      VALUES ($1, $2, $3, $4, $5)
+      VALUES (
+          $1,
+          $2,
+          $3::verification_decision,
+          $4,
+          $5,
+          $6::jsonb
+      )
       RETURNING *`,
       [
         data.order_id,
@@ -39,6 +48,7 @@ export class VerificationLogRepository {
         data.decision,
         data.rejection_note,
         data.wastage_pct,
+        JSON.stringify(data.component_snapshot),
       ],
       client,
     );

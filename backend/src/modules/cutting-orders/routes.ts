@@ -22,4 +22,6 @@ router.patch("/:id/fabric", controller.updateFabricUsage);
 
 router.post("/:id/submit", controller.submitOrder);
 
+router.post("/:id/rework", controller.reopenRejectedOrder);
+
 export default router;

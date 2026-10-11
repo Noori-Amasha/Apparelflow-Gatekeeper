@@ -7,7 +7,8 @@
     "build": "tsc",
     "start": "node dist/src/server.js",
     "typecheck": "tsc --noEmit",
-    "create-user": "tsx scripts/createUser.ts"
+    "create-user": "tsx scripts/createUser.ts",
+    "test": "tsx --test src/tests/*.test.ts"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

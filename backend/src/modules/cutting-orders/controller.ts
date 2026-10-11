@@ -70,3 +70,15 @@ export const submitOrder: RequestHandler = async (req, res, next) => {
     next(error);
   }
 };
+
+export const reopenRejectedOrder: RequestHandler = async (req, res, next) => {
+  try {
+    const orderId = idSchema.parse(req.params.id);
+
+    const order = await service.reopenRejectedOrder(orderId, req.user!.id);
+
+    res.json(order);
+  } catch (error) {
+    next(error);
+  }
+};
