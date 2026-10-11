@@ -154,3 +154,42 @@ export async function submitOrder(orderId: string, supervisorId: string) {
     return submitted;
   });
 }
+
+export async function reopenRejectedOrder(
+  orderId: string,
+  supervisorId: string,
+) {
+  return withTransaction(async (client) => {
+    const order = await CuttingOrderRepository.findByIdForUpdate(
+      orderId,
+      client,
+    );
+
+    if (!order || order.created_by !== supervisorId) {
+      throw new ApiError(404, "Cutting order not found");
+    }
+
+    if (order.status !== CuttingOrderStatus.REJECTED) {
+      throw new ApiError(409, "Only rejected orders can be reopened");
+    }
+
+    await client.query(
+      `UPDATE verification_items
+       SET actual_qty = NULL,
+           status = 'YELLOW'
+       WHERE order_id = $1`,
+      [orderId],
+    );
+
+    const result = await client.query(
+      `UPDATE cutting_orders
+       SET status = 'IN_PROGRESS',
+           updated_at = NOW()
+       WHERE id = $1
+       RETURNING *`,
+      [orderId],
+    );
+
+    return result.rows[0];
+  });
+}
