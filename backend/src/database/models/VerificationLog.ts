@@ -7,5 +7,6 @@ export class VerificationLog {
   decision!: VerificationDecision;
   rejection_note!: string | null;
   wastage_pct!: number;
-  created_at!: Date;
+  component_snapshot!: unknown;
+  timestamp!: Date;
 }
