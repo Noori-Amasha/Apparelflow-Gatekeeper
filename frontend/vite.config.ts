@@ -1,4 +1,6 @@
-import { defineConfig } from "vite";
+/// <reference types="vitest/config" />
+
+import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
@@ -7,5 +9,13 @@ export default defineConfig({
 
   server: {
     port: 5173,
+  },
+
+  test: {
+    environment: "jsdom",
+    setupFiles: ["./tests/setup.ts"],
+    include: ["tests/unit/**/*.test.{ts,tsx}"],
+    clearMocks: true,
+    isolate: true,
   },
 });
