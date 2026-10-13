@@ -240,8 +240,7 @@ export default function CreateOrderModal({
             Expected fabric is calculated automatically. Actual fabric
             must be entered from the supervisor's measurement.
             The recorded value will be used for fabric variance and
-            the verification audit. Creating an order does not
-            submit it for verification.
+            the verification audit. 
           </p>
         </div>
 

@@ -7,10 +7,10 @@ export class VerificationLogRepository {
     return query<VerificationLog>(
       `SELECT
          *,
-         created_at AS timestamp
+        
        FROM verification_logs
        WHERE order_id = $1
-       ORDER BY created_at DESC`,
+       ORDER BY timestamp DESC`,
       [orderId],
     );
   }
@@ -28,22 +28,22 @@ export class VerificationLogRepository {
   ): Promise<VerificationLog> {
     const rows = await query<VerificationLog>(
       `INSERT INTO verification_logs (
-        order_id,
-        verifier_id,
-        decision,
-        rejection_note,
-        wastage_pct,
-        component_snapshot
-      )
-      VALUES (
-        $1,
-        $2,
-        $3,
-        $4,
-        $5,
-        $6::jsonb
-      )
-      RETURNING *, created_at AS timestamp`,
+          order_id,
+          verifier_id,
+          decision,
+          rejection_note,
+          wastage_pct,
+          component_snapshot
+        )
+        VALUES (
+          $1,
+          $2,
+          $3,
+          $4,
+          $5,
+          $6::jsonb
+        )
+        RETURNING *`,
       [
         data.order_id,
         data.verifier_id,

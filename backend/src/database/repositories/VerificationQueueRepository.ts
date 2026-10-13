@@ -47,20 +47,21 @@ export class VerificationQueueRepository {
     client: DatabaseClient,
   ): Promise<ItemDetail | null> {
     const rows = await query<ItemDetail>(
-      `UPDATE verification_items
-        SET actual_qty = $3::integer,
-            status = (
-              CASE
-                WHEN $3::integer = expected_qty THEN 'GREEN'
-                WHEN $3::integer > expected_qty THEN 'YELLOW'
-                ELSE 'RED'
-              END
-            )
-        WHERE id = $2::uuid
-          AND order_id = $1::uuid
-        RETURNING *`,
+      `
+    UPDATE verification_items
+      SET actual_qty = $3::integer,
+          status = (
+            CASE
+              WHEN $3::integer = expected_qty THEN 'GREEN'
+              WHEN $3::integer > expected_qty THEN 'YELLOW'
+              ELSE 'RED'
+            END
+          )::verification_status
+      WHERE id = $2::uuid
+        AND order_id = $1::uuid
+      RETURNING *
+      `,
       [orderId, itemId, count],
-      client,
     );
 
     if (!rows[0]) {

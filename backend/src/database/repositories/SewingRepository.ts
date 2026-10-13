@@ -38,7 +38,7 @@ export class SewingRepository {
 
       vl.verifier_id,
       verifier.full_name AS verifier_name,
-      vl.created_at AS verified_at,
+      vl.timestamp AS verified_at,
       vl.wastage_pct,
       vl.component_snapshot,
 
@@ -54,13 +54,13 @@ export class SewingRepository {
     JOIN LATERAL (
       SELECT
         log.verifier_id,
-        log.created_at,
+       log.timestamp,
         log.wastage_pct,
         log.component_snapshot
       FROM verification_logs log
       WHERE log.order_id = co.id
         AND log.decision = 'APPROVED'
-      ORDER BY log.created_at DESC, log.id DESC
+      ORDER BY log.timestamp DESC, log.id DESC
       LIMIT 1
     ) vl ON TRUE
 

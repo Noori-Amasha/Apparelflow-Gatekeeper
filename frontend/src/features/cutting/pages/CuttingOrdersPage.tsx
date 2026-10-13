@@ -402,9 +402,7 @@ export default function CuttingOrdersPage() {
 
               <p className="mt-3 text-xs leading-5 text-slate-500">
                 Variance compares the supervisor-recorded actual fabric
-                against the recipe standard. A negative value means less
-                fabric was recorded than expected. It does not replace
-                component verification.
+                against the recipe standard. 
               </p>
             </div>
 
