@@ -32,3 +32,11 @@ Thumbs.db
 # Local database files
 *.db
 *.db-journal
+
+# Playwright generated files
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Local E2E credentials
+.env.e2e
