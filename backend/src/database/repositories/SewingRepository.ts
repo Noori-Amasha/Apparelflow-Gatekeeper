@@ -36,11 +36,11 @@ export class SewingRepository {
       (r.std_fabric_yards * co.target_qty)
         AS expected_fabric_yds,
 
-      vl.verifier_id,
+      log.verifier_id,
       verifier.full_name AS verifier_name,
-      vl.timestamp AS verified_at,
-      vl.wastage_pct,
-      vl.component_snapshot,
+      log.verified_at,
+      log.wastage_pct,
+      log.component_snapshot,
 
       sa.started_by,
       supervisor.full_name AS started_by_name,
@@ -54,18 +54,18 @@ export class SewingRepository {
     JOIN LATERAL (
       SELECT
         log.verifier_id,
-       log.timestamp,
+       log.created_at AS verified_at,
         log.wastage_pct,
         log.component_snapshot
       FROM verification_logs log
       WHERE log.order_id = co.id
         AND log.decision = 'APPROVED'
-      ORDER BY log.timestamp DESC, log.id DESC
+      ORDER BY log.created_at DESC, log.id DESC
       LIMIT 1
-    ) vl ON TRUE
+    ) log ON TRUE
 
     JOIN users verifier
-      ON verifier.id = vl.verifier_id
+      ON verifier.id = log.verifier_id
 
     LEFT JOIN sewing_assemblies sa
       ON sa.order_id = co.id
@@ -138,9 +138,9 @@ export class SewingRepository {
          AND co.status IN ($2, $3)
          AND EXISTS (
            SELECT 1
-           FROM verification_logs vl
-           WHERE vl.order_id = co.id
-             AND vl.decision = 'APPROVED'
+           FROM verification_logs log
+           WHERE log.order_id = co.id
+             AND log.decision = 'APPROVED'
          )
          AND (
            (
@@ -193,13 +193,13 @@ export class SewingRepository {
       `SELECT (
         EXISTS (
           SELECT 1
-          FROM verification_logs vl
+          FROM verification_logs log
           JOIN users u
-            ON u.id = vl.verifier_id
-          WHERE vl.order_id = co.id
-            AND vl.decision = 'APPROVED'
+            ON u.id = log.verifier_id
+          WHERE log.order_id = co.id
+            AND log.decision = 'APPROVED'
             AND u.role = 'cutting_verifier'
-            AND vl.component_snapshot IS NOT NULL
+            AND log.component_snapshot IS NOT NULL
         )
 
         AND EXISTS (

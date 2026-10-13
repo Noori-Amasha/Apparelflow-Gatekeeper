@@ -56,7 +56,7 @@ export class VerificationQueueRepository {
               WHEN $3::integer > expected_qty THEN 'YELLOW'
               ELSE 'RED'
             END
-          )::verification_status
+          )
       WHERE id = $2::uuid
         AND order_id = $1::uuid
       RETURNING *

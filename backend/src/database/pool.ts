@@ -6,6 +6,12 @@ types.setTypeParser(1700, Number);
 
 export const pool = new Pool({
   connectionString: env.DATABASE_URL,
+
+  // Required for Supabase PostgreSQL connections
+  ssl: {
+    rejectUnauthorized: false,
+  },
+
   max: 10,
 });
 
