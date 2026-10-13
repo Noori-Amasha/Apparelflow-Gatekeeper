@@ -2,10 +2,10 @@
 
 <p align="center">
 
-<img src="https://img.shields.io/badge/React-TypeScript-blue?style=for-the-badge&logo=react"/>
-<img src="https://img.shields.io/badge/Backend-Node.js-green?style=for-the-badge&logo=node.js"/>
+<img src="https://img.shields.io/badge/Frontend-React%20%2B%20TypeScript-blue?style=for-the-badge&logo=react"/>
+<img src="https://img.shields.io/badge/Backend-Node.js%20%2B%20Express-green?style=for-the-badge&logo=node.js"/>
 <img src="https://img.shields.io/badge/Database-PostgreSQL-blue?style=for-the-badge&logo=postgresql"/>
-<img src="https://img.shields.io/badge/Deployment-Cloud-success?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Deployment-Vercel%20%2B%20Render-success?style=for-the-badge"/>
 
 </p>
 
@@ -15,136 +15,122 @@ Production Batch Verification & Sewing Queue Gate for ApparelFlow ERP
 </h3>
 
 
+<p align="center">
+🧵 Ensuring only verified production batches reach the sewing floor.
+</p>
+
+
 ---
 
 # 📌 Project Overview
 
-**ApparelFlow Gatekeeper** is a production verification and sewing queue management system designed for garment manufacturing environments.
+**ApparelFlow Gatekeeper** is a full-stack production verification and sewing queue management system designed for garment manufacturing environments.
 
-The system introduces a strict quality checkpoint between the **Cutting Department** and the **Sewing Assembly Floor**.
+The system creates a secure checkpoint between the **Cutting Department** and the **Sewing Assembly Floor**.
 
-Its main purpose is preventing:
+Its purpose is to prevent incorrect or incomplete production batches from entering sewing operations.
 
-- ❌ Unverified production batches
-- ❌ Component shortages
-- ❌ Incorrect garment quantities
-- ❌ Unauthorized status changes
+## The system prevents:
 
-from entering sewing operations.
-
-
-The application implements:
-
-- 🔐 JWT Authentication
-- 👥 Role-Based Access Control (RBAC)
-- 🚦 GREEN / YELLOW / RED verification logic
-- 🛑 Server-side approval protection
-- 🧵 Verified-only Sewing Queue
-- 📊 Fabric wastage calculations
-- 📝 Immutable verification audit logs
+❌ Unverified production batches  
+❌ Component shortages reaching sewing  
+❌ Incorrect quantity approvals  
+❌ Unauthorized workflow changes  
 
 
----
+## Main Capabilities
 
-# 🎯 Business Workflow
-
-
-```
-CUTTING ORDER
-
-      ↓
-
-PENDING VERIFICATION
-
-      ↓
-
-COMPONENT CHECK
-
-      ↓
-
- ┌───────────────┐
- │               │
-GREEN         RED
-MATCH       SHORTAGE
-
- │               │
- ↓               ↓
-
-VERIFIED      REJECTED
-
- │
-
- ↓
-
-SEWING QUEUE
-
- │
-
- ↓
-
-SEWING STARTED
-```
-
-
-The backend enforces the rule:
-
-> A batch cannot enter Sewing unless every required component has passed verification.
+✅ JWT Authentication  
+✅ Role-Based Access Control (RBAC)  
+✅ Cutting order management  
+✅ Recipe-based component validation  
+✅ GREEN / YELLOW / RED verification workflow  
+✅ Server-side approval protection  
+✅ Verified-only Sewing Queue  
+✅ Fabric wastage calculation  
+✅ Verification audit history  
 
 
 ---
 
-# ✨ Main Features
+# 🌐 Live Deployment
 
 
-## 🔐 Authentication & Authorization
+## Frontend Application
 
-- JWT based authentication
-- Secure password hashing
-- Role based route protection
-- Server-side permission validation
+🚀 Hosted on **Vercel**
 
-
-## ✂️ Cutting Operations
-
-Cutting Supervisors can:
-
-- Create production batches
-- Select garment recipes
-- Enter production quantities
-- Track cutting progress
+```
+https://apparelflow-gatekeeper-six.vercel.app
+```
 
 
-## 🔍 Verification Terminal
+## Backend API
 
-Cutting Verifiers can:
+⚙️ Hosted on **Render**
 
-- Review pending batches
-- Verify every component
-- Approve valid batches
-- Reject incomplete batches
-
-
-Verification statuses:
+```
+https://apparelflow-gatekeeper.onrender.com
+```
 
 
-| Status | Meaning |
-|---|---|
-| 🟢 GREEN | Exact component match |
-| 🟡 YELLOW | Excess quantity available |
-| 🔴 RED | Component shortage |
+## Database
+
+🗄️ Hosted on **Supabase PostgreSQL**
 
 
+Health Check:
 
-## 🧵 Sewing Queue
-
-Sewing Supervisors can:
-
-- View verified batches
-- Review verification details
-- Start sewing assembly
+```
+https://apparelflow-gatekeeper.onrender.com/api/health
+```
 
 
-Only approved batches appear.
+---
+
+# 🔄 Production Workflow
+
+
+```
+             CUTTING ORDER
+
+                    |
+                    ↓
+
+          PENDING VERIFICATION
+
+                    |
+                    ↓
+
+            COMPONENT CHECK
+
+
+          ┌─────────────────┐
+          │                 │
+       GREEN             RED
+       MATCH          SHORTAGE
+          │                 │
+          ↓                 ↓
+
+      VERIFIED          REJECTED
+
+          |
+          ↓
+
+       SEWING QUEUE
+
+          |
+          ↓
+
+   SEWING ASSEMBLY STARTED
+
+```
+
+
+## Core Business Rule
+
+> A batch cannot enter the Sewing Queue unless all required components have passed verification.
+
 
 ---
 
@@ -152,11 +138,85 @@ Only approved batches appear.
 
 
 | Role | Responsibilities |
-|-|-|
-| ✂️ Cutting Supervisor | Creates cutting orders and manages production batches |
-| 🔍 Cutting Verifier | Performs component verification and approval/rejection |
-| 🧵 Sewing Supervisor | Receives verified batches and starts sewing |
+|---|---|
+| ✂️ Cutting Supervisor | Creates cutting orders, selects recipes, manages production batches |
+| 🔍 Cutting Verifier | Verifies components, approves valid batches, rejects shortages |
+| 🧵 Sewing Supervisor | Views verified batches and starts sewing operations |
 
+
+All permissions are enforced on the backend.
+
+
+---
+
+# ✨ Features
+
+
+# 🔐 Authentication & Security
+
+Implemented:
+
+- JWT authentication
+- Password hashing using bcrypt
+- Protected API routes
+- Role-based authorization
+- Request validation using Zod
+
+
+Frontend restrictions are only for user experience.
+
+The backend is the final authority.
+
+
+---
+
+# ✂️ Cutting Operations
+
+
+Cutting Supervisors can:
+
+- Create production orders
+- Select garment recipes
+- Enter production quantities
+- Track order progress
+
+
+---
+
+# 🔍 Verification Terminal
+
+
+Cutting Verifiers can:
+
+- Review pending cutting batches
+- Check every component quantity
+- Approve valid batches
+- Reject invalid batches with reasons
+
+
+## Verification Status
+
+
+| Status | Meaning |
+|---|---|
+| 🟢 GREEN | Exact quantity match |
+| 🟡 YELLOW | Excess quantity available |
+| 🔴 RED | Component shortage detected |
+
+
+---
+
+# 🧵 Sewing Queue
+
+
+Sewing Supervisors can:
+
+- View approved production batches
+- Review verification information
+- Start sewing assembly
+
+
+Only verified batches appear in the queue.
 
 
 ---
@@ -165,22 +225,27 @@ Only approved batches appear.
 
 
 ```
-                 React Frontend
-                       |
-                       |
-                 REST API Calls
-                       |
-                       |
-              Express TypeScript API
-                       |
-        ┌──────────────┴──────────────┐
+              React Frontend
+                    |
+                    |
+              REST API Calls
+                    |
+                    |
+        Express TypeScript Backend
+                    |
+        ┌───────────┴───────────┐
         |
- Authentication                 Business Logic
+ Authentication        Business Logic
         |
         |
- PostgreSQL Database
+     PostgreSQL Database
+
 ```
 
+
+---
+
+# 🛠️ Technology Stack
 
 
 ## Frontend
@@ -197,14 +262,16 @@ Only approved batches appear.
 - Node.js
 - Express.js
 - TypeScript
-- JWT Authentication
-- Zod Validation
-- Raw SQL Queries
+- JWT
+- Zod
+- bcrypt
+- Raw SQL queries
 
 
 ## Database
 
-- PostgreSQL (Supabase)
+- PostgreSQL
+- Supabase
 - Parameterized SQL
 - Relational database design
 
@@ -216,8 +283,7 @@ Only approved batches appear.
 
 ## Users
 
-Stores authentication and roles.
-
+Stores authentication and user roles.
 
 ```
 users
@@ -233,8 +299,7 @@ created_at
 
 ## Recipes
 
-Stores garment production recipes.
-
+Stores garment production definitions.
 
 ```
 recipes
@@ -250,6 +315,7 @@ wastage_cap
 
 ## Recipe Components
 
+Stores garment components.
 
 ```
 recipe_components
@@ -264,6 +330,7 @@ image_url
 
 ## Cutting Orders
 
+Stores production batches.
 
 ```
 cutting_orders
@@ -281,6 +348,7 @@ created_by
 
 ## Verification Items
 
+Stores component verification results.
 
 ```
 verification_items
@@ -296,6 +364,7 @@ status
 
 ## Verification Logs
 
+Stores approval and rejection history.
 
 ```
 verification_logs
@@ -312,83 +381,216 @@ created_at
 
 ---
 
-# 🛡️ Security Architecture
+# 🛡️ Defensive Architecture
 
 
-Security is enforced on the backend.
-
-Frontend restrictions are only for usability.
+Security is implemented at the backend API layer.
 
 
 Implemented:
 
 
-✅ JWT authentication
-
 ✅ Server-side RBAC middleware
 
-✅ Protected API routes
+✅ JWT protected routes
 
 ✅ Parameterized SQL queries
 
 ✅ Request validation
 
-✅ Database level filtering
+✅ Protected status transitions
 
-
-## Hard Stop Rules
-
-
-Approval is blocked when:
-
-
-- Component shortage exists
-- Required component is missing
-- Verification is incomplete
-- User does not have verifier permission
+✅ Database-level queue filtering
 
 
 ---
 
-# 🚀 Deployment
+# 🚫 Approval Protection Rules
 
 
-## Frontend
+A batch approval is blocked when:
 
-Hosted on:
+
+- Required components are missing
+- Any component has shortage
+- Verification is incomplete
+- User does not have verifier permission
+
+
+This prevents bypassing the frontend and directly calling APIs with invalid data.
+
+
+---
+
+# 🧪 Testing
+
+
+The project includes automated tests covering important business rules.
+
+
+## Backend Tests
+
+
+Install dependencies:
+
+```bash
+cd backend
+
+npm install
+```
+
+
+Run tests:
+
+```bash
+npm test
+```
+
+
+Run TypeScript validation:
+
+```bash
+npm run typecheck
+```
+
+
+---
+
+## Frontend Tests
+
+
+Install dependencies:
+
+```bash
+cd frontend
+
+npm install
+```
+
+
+Run tests:
+
+```bash
+npm test
+```
+
+
+---
+
+## End-to-End Tests
+
+
+Install Playwright browsers:
+
+```bash
+npx playwright install
+```
+
+
+Run:
+
+```bash
+npx playwright test
+```
+
+
+---
+
+# ✅ Tested Scenarios
+
+
+The test suite verifies:
+
+
+✅ Valid batches can be approved
+
+✅ Shortage batches cannot be approved
+
+✅ Rejection requires a reason
+
+✅ Unauthorized users cannot perform restricted actions
+
+✅ Unverified batches cannot appear in Sewing Queue
+
+✅ Workflow state persists correctly
+
+
+---
+
+# 🚀 Local Development Setup
+
+
+## Clone Repository
+
+
+```bash
+git clone <repository-url>
+
+cd Apparelflow-Gatekeeper
+```
+
+
+---
+
+# Backend Setup
+
+
+```bash
+cd backend
+
+npm install
+```
+
+
+Create environment file:
+
 
 ```
-Vercel
-```
-
-URL:
-
-```
-https://apparelflow-gatekeeper-six.vercel.app
+.env
 ```
 
 
-## Backend
+Use:
 
-Hosted on:
-
-```
-Render
-```
-
-URL:
 
 ```
-https://apparelflow-gatekeeper.onrender.com
+.env.example
 ```
 
 
-## Database
+Run backend:
 
-Hosted on:
+
+```bash
+npm run dev
+```
+
+
+Backend runs:
 
 ```
-Supabase PostgreSQL
+http://localhost:5000
+```
+
+
+---
+
+# Frontend Setup
+
+
+```bash
+cd frontend
+
+npm install
+
+npm run dev
+```
+
+
+Frontend runs:
+
+```
+http://localhost:5173
 ```
 
 
@@ -409,6 +611,7 @@ Super@123
 ```
 
 
+---
 
 ## 🔍 Cutting Verifier
 
@@ -422,6 +625,7 @@ Verifier@123
 ```
 
 
+---
 
 ## 🧵 Sewing Supervisor
 
@@ -432,61 +636,6 @@ sewing@demo.com
 
 Password:
 Sewing@123
-```
-
-
-
----
-
-# 🧪 Testing
-
-
-The automated test suite validates critical business rules.
-
-
-Covered scenarios:
-
-
-✅ Valid GREEN batch approval
-
-✅ RED shortage approval blocking
-
-✅ Mandatory rejection reason validation
-
-✅ Unauthorized role protection
-
-✅ Sewing Queue isolation
-
-
-
-## Run Tests
-
-
-Backend:
-
-
-```bash
-cd backend
-
-npm test
-```
-
-
-Type checking:
-
-
-```bash
-npm run typecheck
-```
-
-
-Frontend:
-
-
-```bash
-cd frontend
-
-npm test
 ```
 
 
@@ -502,9 +651,9 @@ ApparelFlow-Gatekeeper
 ├── backend
 │
 │   ├── src
-│   │   ├── modules
 │   │   ├── database
 │   │   ├── middleware
+│   │   ├── modules
 │   │   └── routes
 │
 ├── frontend
@@ -517,30 +666,34 @@ ApparelFlow-Gatekeeper
 ├── README.md
 │
 └── AI_OPTIMIZATION_REPORT.md
-```
 
+```
 
 
 ---
 
-# 🤖 AI Usage Documentation
+# 🤖 AI Engineering Documentation
 
 
-AI-assisted development was used during implementation.
+AI tools were used as development assistants during implementation.
 
-Detailed documentation is available:
+
+Detailed documentation:
+
 
 ```
 AI_OPTIMIZATION_REPORT.md
 ```
 
 
-The report covers:
+The report includes:
+
 
 - AI tools used
-- Generated code issues discovered
+- Development tasks assisted by AI
+- AI-generated issues discovered
 - Human refactoring decisions
-- Defensive architecture choices
+- Defensive architecture improvements
 
 
 ---
@@ -548,15 +701,15 @@ The report covers:
 # 📈 Engineering Highlights
 
 
-⭐ Production workflow modeling
+⭐ Full-stack TypeScript architecture
 
 ⭐ Secure RBAC implementation
 
-⭐ Database-driven state management
+⭐ Database-driven workflow control
 
-⭐ Server enforced business rules
+⭐ Server-side business validation
 
-⭐ Automated testing
+⭐ Automated testing strategy
 
 ⭐ Cloud deployment
 
@@ -565,4 +718,5 @@ The report covers:
 
 # 🧵 ApparelFlow Gatekeeper
 
-### Verify Before You Sew.
+
+## Verify Before You Sew.
