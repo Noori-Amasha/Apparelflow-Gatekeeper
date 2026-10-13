@@ -5,10 +5,12 @@ import { DatabaseClient, query } from "../query";
 export class VerificationLogRepository {
   static async findByOrder(orderId: string): Promise<VerificationLog[]> {
     return query<VerificationLog>(
-      `SELECT *
+      `SELECT
+         *,
+         created_at AS timestamp
        FROM verification_logs
        WHERE order_id = $1
-       ORDER BY timestamp DESC`,
+       ORDER BY created_at DESC`,
       [orderId],
     );
   }
@@ -34,14 +36,14 @@ export class VerificationLogRepository {
         component_snapshot
       )
       VALUES (
-          $1,
-          $2,
-          $3::verification_decision,
-          $4,
-          $5,
-          $6::jsonb
+        $1,
+        $2,
+        $3,
+        $4,
+        $5,
+        $6::jsonb
       )
-      RETURNING *`,
+      RETURNING *, created_at AS timestamp`,
       [
         data.order_id,
         data.verifier_id,
